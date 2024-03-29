@@ -6,7 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MealsViewModel @Inject constructor(): ViewModel() {
+class MealsViewModel @Inject constructor() : ViewModel() {
     init {
         Log.d("checking", "hello guys")
     }
