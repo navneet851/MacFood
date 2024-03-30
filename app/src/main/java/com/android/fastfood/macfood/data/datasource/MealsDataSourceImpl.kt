@@ -8,7 +8,7 @@ import javax.inject.Inject
 class MealsDataSourceImpl @Inject constructor(
     private val apiService: ApiService
 ): MealsDataSource {
-    override fun getMeals(): Response<MealsResponse> {
+    override suspend fun getMeals(): Response<MealsResponse> {
         return apiService.getMeals()
     }
 }

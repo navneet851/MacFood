@@ -8,5 +8,5 @@ import retrofit2.http.Query
 
 interface ApiService {
     @GET("chickens")
-    fun getMeals(): Response<MealsResponse>
+    suspend fun getMeals(): Response<MealsResponse>
 }
