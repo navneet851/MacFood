@@ -32,9 +32,12 @@ fun HomeScreen(
                 Log.d("homeMain", "loading...")
                 Loader()
             }
+
             is ResourceState.Success -> {
                 Log.d("homeMain", "Success.")
+
             }
+
             is ResourceState.Error -> {
                 Log.d("homeMain", "Error!!")
             }

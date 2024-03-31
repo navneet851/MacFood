@@ -1,6 +1,5 @@
 package com.android.fastfood.macfood.ui.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.android.fastfood.macfood.ResourceState
@@ -21,6 +20,11 @@ class MealsViewModel @Inject constructor(
 
     private val _meals : MutableStateFlow<ResourceState<MealsResponse>> = MutableStateFlow(ResourceState.Loading())
     val meals : StateFlow<ResourceState<MealsResponse>> = _meals
+
+    init {
+//        Log.d("checking", "hello guys")
+        getAllMeals()
+    }
     private fun getAllMeals(){
         viewModelScope.launch(Dispatchers.IO) {
             mealsRepository.getMeals()
@@ -30,8 +34,5 @@ class MealsViewModel @Inject constructor(
                 }
         }
     }
-    init {
-//        Log.d("checking", "hello guys")
-        getAllMeals()
-    }
+
 }

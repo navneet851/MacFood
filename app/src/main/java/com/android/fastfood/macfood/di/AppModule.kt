@@ -9,6 +9,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -21,6 +22,10 @@ class AppModule{
     @Singleton
     fun providesRetrofit() : Retrofit{
 
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+
         val client = OkHttpClient.Builder()
             .addInterceptor { chain ->
                 val request = chain.request().newBuilder()
@@ -29,15 +34,15 @@ class AppModule{
                     .build()
                 chain.proceed(request)
             }
-            .connectTimeout(30, TimeUnit.SECONDS) // Connect timeout
-            .readTimeout(30, TimeUnit.SECONDS) // Read timeout
-            .writeTimeout(30, TimeUnit.SECONDS) // Write timeout
+            .addInterceptor(loggingInterceptor)
+            .connectTimeout(60, TimeUnit.SECONDS)
+            .readTimeout(60, TimeUnit.SECONDS)
             .build()
 
         return Retrofit.Builder()
             .baseUrl("https://kfc-chickens.p.rapidapi.com/")
-            .client(client)
             .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
             .build()
 
     }
@@ -48,8 +53,8 @@ class AppModule{
         return retrofit.create(ApiService::class.java)
     }
 
-    @Provides
     @Singleton
+    @Provides
     fun providesMealsDataSource(apiService: ApiService) : MealsDataSource{
         return MealsDataSourceImpl(apiService)
     }
