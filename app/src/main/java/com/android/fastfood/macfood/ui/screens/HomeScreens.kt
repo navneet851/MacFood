@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.android.fastfood.macfood.ResourceState
 import com.android.fastfood.macfood.ui.components.Loader
+import com.android.fastfood.macfood.ui.components.MealsList
 import com.android.fastfood.macfood.ui.viewmodel.MealsViewModel
 
 @Composable
@@ -34,8 +35,9 @@ fun HomeScreen(
             }
 
             is ResourceState.Success -> {
+                val response = (mealsRes as ResourceState.Success).data
                 Log.d("homeMain", "Success.")
-
+                MealsList(response)
             }
 
             is ResourceState.Error -> {
