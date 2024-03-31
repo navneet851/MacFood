@@ -21,7 +21,7 @@ class MealsRepository @Inject constructor(
             emit(ResourceState.Loading())
 
             val response = mealsDataSource.getMeals()
-             Log.d("reponse", response.body()?.meals?.size.toString())
+             Log.d("reponse", arrayOf(response.body()).contentDeepToString())
             if (response.isSuccessful && response.body() != null){
                 emit(ResourceState.Success(response.body()!!))
             }
